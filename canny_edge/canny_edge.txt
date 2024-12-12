@@ -1,0 +1,36 @@
+Steps involved in this algo
+
+1. Noise reduction using Gaussian filter 
+
+It involves the usage of Gaussian Filter for the removal of noise from an image. This is because the noise can be assumed as edges due to the 
+sudden intensity change.  
+
+2. Gradient calculation along the horizontal and vertical axis 
+
+Now in this step, when the image is smoothened, the derivatives lx and ly are calculated w.r.t x and y axis. 
+
+3. Non-Maximum suppression of false edges 
+
+This step aims at reduing the duplicate merging pixels at the edges by making them uneven. 
+If the magnitude of the current pixel is greater than that of the neighbours, nothing changes. 
+Else the magintude of the current pixel is set to zero.
+
+Inshort this is done to highlight the true edges of a section of an image.  
+
+4. Double thresholding for segregating strong and weak edges 
+
+Now what we do in this instead of setting up one threshold and having a possibility of missing out edges of the same object due to lower intensity, 
+what we do is have two threshold and maintain the area between the two threshold if and only if the edges are connected or are part of the same 
+object. 
+
+In other words, The gradient magnitudes are compared with two specified threshold values, the first one is lower than the second. The gradients that 
+are smaller than the low threshold value are suppressed, the gradients higher than the high threshold value are marked as strong ones and the 
+corresponding pixels are included in the final edge map.
+
+5. Edge tracking by hysteresis
+
+Since a weak edge pixel caused by true edges will be connected to a strong edge pixel, pixel W with weak gradient is marked as edge and included in 
+the final edge map if and only if it is involved in the same connected component as some pixel S with strong gradient. In other words, there should 
+be a chain of neighbor weak pixels connecting W and S (the neighbors are 8 pixels around the considered one). We will make up and implement an 
+algorithm that finds all the connected components of the gradient map considering each pixel only once. After that, you can decide which pixels will 
+be included in the final edge map.
