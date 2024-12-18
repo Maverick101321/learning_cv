@@ -1,0 +1,21 @@
+The aim is to use Caffe Colorization model to convert b&w images to a colored one. 
+
+Steps - 
+
+1. Load the model and the convolutional/kernel points
+2. Preprocess the image
+3. Generate model predictions using the L channel for the input image
+4. Use the ab channel to create the resulting img. 
+
+Now L and the ab channel are part of Lab color space. 
+ - Similarly to RGB, this also has three channels. 
+ - The differentiating point is that in RBG we take into consideration the pixel values, but in this all
+ three of them have different significances. 
+ - L is the lightness channel, which is the same as the intensity of the pixel.
+ - a is the red-green axis, and b is the blue-yellow axis.
+ - The values of a and b are between -128 and 128.
+ - The values of L are between 0 and 100.
+
+
+ In other words, we'll use the L channel of the img as input to the model and predict the ab channel
+ values and rejoin it with the L channel values to produce the final colored img.  
